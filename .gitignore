@@ -1,18 +1,35 @@
-# This .gitignore is appropriate for repositories deployed to GitHub Pages and using
-# a Gemfile as specified at https://github.com/github/pages-gem#conventional
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Telegram Mini App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 20px; }
+        button { padding: 10px 20px; background: #0088cc; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Привет, Telegram! 👋</h1>
+    <p>Это мини-приложение внутри Telegram.</p>
+    <button onclick="showUserData()">Показать мои данные</button>
+    <div id="user-data"></div>
 
-# Basic Jekyll gitignores (synchronize to Jekyll.gitignore)
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
+    <script>
+        const tg = window.Telegram.WebApp;
 
-# Additional Ruby/bundler ignore for when you run: bundle install
-/vendor
+        // Показываем кнопку "Закрыть"
+        tg.expand(); // Раскрываем приложение на весь экран
+        tg.MainButton.setText("Закрыть").show().onClick(() => tg.close());
 
-# Specific ignore for GitHub Pages
-# GitHub Pages will always use its own deployed version of pages-gem 
-# This means GitHub Pages will NOT use your Gemfile.lock and therefore it is
-# counterproductive to check this file into the repository.
-# Details at https://github.com/github/pages-gem/issues/768
-Gemfile.lock
+        function showUserData() {
+            const user = tg.initDataUnsafe.user;
+            document.getElementById("user-data").innerHTML = `
+                <p>Ваш ID: ${user?.id}</p>
+                <p>Имя: ${user?.first_name}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
